@@ -25,34 +25,34 @@ func (p *PostGresRepo) Create(ctx context.Context, u *domain.User) error {
 	_, err := p.db.Exec(ctx, query, u.ID, u.Name, u.Email)
 
 	if err != nil {
-        var pgErr *pgconn.PgError
-        if errors.As(err, &pgErr) {
-            if pgErr.Code == "23505" {
-                return domain.ErrUserAlreadyExists
-            }
-        }
-        return err
-    }
+		var pgErr *pgconn.PgError
+		if errors.As(err, &pgErr) {
+			if pgErr.Code == "23505" {
+				return domain.ErrUserAlreadyExists
+			}
+		}
+		return err
+	}
 
-    return nil
+	return nil
 }
 
 func (p *PostGresRepo) GetByID(ctx context.Context, id string) (*domain.User, error) {
-    query := `SELECT id, name, email FROM users WHERE id = $1`
+	query := `SELECT id, name, email FROM users WHERE id = $1`
 
-    var user domain.User
+	var user domain.User
 
-    err := p.db.QueryRow(ctx, query, id).Scan(&user.ID, &user.Name, &user.Email)
+	err := p.db.QueryRow(ctx, query, id).Scan(&user.ID, &user.Name, &user.Email)
 
-    if err != nil {
-        if errors.Is(err, pgx.ErrNoRows) {
-            return nil, domain.ErrUserNotFound
-        }
+	if err != nil {
+		if errors.Is(err, pgx.ErrNoRows) {
+			return nil, domain.ErrUserNotFound
+		}
 
-        return nil, err
-    }
+		return nil, err
+	}
 
-    return &user, nil
+	return &user, nil
 }
 
 func (p *PostGresRepo) GetAll(ctx context.Context) ([]domain.User, error) {

@@ -23,8 +23,8 @@ func (u *UserService) Create(ctx context.Context, name, email string) (*domain.U
 	}
 
 	user := domain.User{
-		ID: uuid.NewString(),
-		Name: name,
+		ID:    uuid.NewString(),
+		Name:  name,
 		Email: email,
 	}
 

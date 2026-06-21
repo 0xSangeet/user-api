@@ -68,4 +68,3 @@ func (m *MemoryRepo) Delete(ctx context.Context, id string) error {
 	delete(m.users, id)
 	return nil
 }
-
