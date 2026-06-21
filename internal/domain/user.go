@@ -8,6 +8,7 @@ import (
 var (
 	ErrUserAlreadyExists = errors.New("user already exists")
 	ErrUserNotFound      = errors.New("user not found")
+	ErrInvalidInput      = errors.New("invalid input")
 )
 
 type User struct {
